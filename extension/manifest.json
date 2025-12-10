@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Query Rewriter Task",
+  "version": "1.0.0",
+  "description": "Base extension for redirecting search queries. Fix the bugs and complete the logic!",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_title": "Settings",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "host_permissions": [
+    "http://localhost:3000/*"
+  ],
+
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Query Rewriter",
+      "keyword": "qr",
+      "search_url": "http://localhost:3000/search?q={searchTerms}",
+      "favicon_url": "https://www.google.com/favicon.ico",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  }
+}

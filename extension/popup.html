@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rewriter Settings & Search</title>
+</head>
+<body>
+    <div style="padding: 15px; min-width: 300px; font-family: Arial;">
+        <h2>Query Rewriter Settings</h2>
+        
+        <label for="negative-keywords" style="font-size: 0.9em;">Negative Keywords (comma separated):</label>
+        <textarea id="negative-keywords" rows="3" style="width: 100%; resize: none;"></textarea>
+        
+        <!-- 🔽 חדש: בחירת מנוע חיפוש -->
+        <label for="search-engine" style="font-size: 0.9em; display:block; margin-top:8px;">
+            Search engine:
+        </label>
+        <select id="search-engine" style="width:100%; padding:4px;">
+            <option value="google">Google</option>
+            <option value="bing">Bing</option>
+            <option value="duckduckgo">DuckDuckGo</option>
+        </select>
+        <!-- סוף החדש -->
+
+        <button id="save-settings-btn" style="margin-top: 10px; padding: 8px; width: 100%; background-color: green; color: white;">
+            Save Settings
+        </button>
+        <p id="status-message" style="margin-top: 10px; font-weight: bold;"></p>
+        
+        <p style="margin: 15px 0; border-bottom: 1px solid #ccc;"></p>
+
+        <h3>Direct Search</h3>
+        <input type="text" id="search-term" placeholder="Enter search query" style="width: calc(100% - 10px); padding: 5px;" />
+        
+        <button id="direct-search-btn" style="margin-top: 10px; padding: 8px; width: 100%; background-color: blue; color: white;">
+            Search via API
+        </button>
+    </div>
+
+    <script src="popup.js"></script> 
+</body>
+</html>
