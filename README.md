@@ -52,9 +52,47 @@ Maintainability: The interception logic is declared in the manifest, while all b
 Stability: Unlike URL-based interception or DNR redirect rules, this method does not break when search engines change their URL structure.
 
 For these reasons, it is the most appropriate and stable architecture for implementing a custom query rewriter.
+
 ### A full decision tree - describe what were your dilemmas and explain your choices.
 
-[... Your decision tree goes here ...]
+When deciding how to intercept the user’s default search queries, I considered several architectural options:
+
+chrome_settings_overrides.search_provider (chosen)
+
+Native support for overriding the default search engine.
+
+Intercepts the query before any navigation occurs.
+
+Requires only minimal permissions and keeps all business logic on the backend.
+→ Selected as the optimal solution for performance, security, and maintainability.
+
+webNavigation / tabs listeners
+
+Can observe and modify navigation after a URL has been loaded or is in progress.
+
+However, interception happens after the browser has already started navigating, which causes slower UX and visible redirects.
+
+Requires broader permissions (tab access and navigation events), which increases the privacy and security surface.
+→ Rejected due to poorer UX and heavier permissions.
+
+declarativeNetRequest (DNR) redirect rules
+
+Suitable for static redirect patterns.
+
+Not a good fit for dynamic, user-generated search queries that need to be rewritten and routed based on runtime logic.
+
+Very brittle: rules would depend on the exact URL format of Google/Bing and could easily break when those change.
+→ Rejected for maintainability and flexibility reasons.
+
+chrome_url_overrides (custom New Tab page)
+
+Affects only searches initiated from a custom New Tab page.
+
+Does not intercept generic omnibox searches, which is a core requirement of this task.
+→ Rejected because it does not satisfy the functional requirements.
+
+Conclusion:
+After evaluating these alternatives, chrome_settings_overrides.search_provider is the only approach that cleanly satisfies all constraints: it is performant, requires limited permissions, keeps logic centralized on the backend, and is robust against changes in external search engine implementations.
 
 
 cd backend
